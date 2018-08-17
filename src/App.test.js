@@ -24,14 +24,14 @@ it('on change of input field should call handleChange and update state', () => {
   expect(wrapper.state().inputvalue).toEqual('matched');
 });
 
-it('on change of input field should call handleChange and update state', () => {
+it('on change of input field should call handleChange without any value should not update', () => {
   const spy = jest.spyOn(App.prototype, 'handleChange');
   const wrapper = shallow(<App />);
   const buttonElement = wrapper.find('#input');
   buttonElement.simulate('change');
   expect(wrapper.state().inputvalue).toEqual('');
 });
-it('on change of input field should call getApiMessage', () => {
+it('on click of button should call getApiMessage', () => {
   const spy = jest.spyOn(App.prototype, 'getApiMessage');
   const wrapper = shallow(<App />);
   const buttonElement = wrapper.find('#button');
@@ -39,7 +39,7 @@ it('on change of input field should call getApiMessage', () => {
   expect(spy).toHaveBeenCalledTimes(1);
 });
 
-it('on change of input field should call handleChange and update state', () => {
+it('on click of button should call getApiMessage and return success', () => {
   const handlechangespy = jest.spyOn(App.prototype, 'handleChange');
   const getApiMessagespy = jest.spyOn(App.prototype, 'getApiMessage');
   const wrapper = shallow(<App />);
@@ -48,16 +48,23 @@ it('on change of input field should call handleChange and update state', () => {
 
   const buttonElement = wrapper.find('#button');
   buttonElement.simulate('click');
-
-  expect(wrapper.state().inputvalue).toEqual('matched');
+  setTimeout(function() {
+    expect(wrapper.state().apiresult).toEqual('success');
+  },2000);
 });
 
-it('on change of input field should call handleChange and update state', () => {
+it('on click of button should call getApiMessage and return error', () => {
+  const handlechangespy = jest.spyOn(App.prototype, 'handleChange');
   const getApiMessagespy = jest.spyOn(App.prototype, 'getApiMessage');
   const wrapper = shallow(<App />);
+  const inputElement = wrapper.find('#input');
+  inputElement.simulate('change');
 
   const buttonElement = wrapper.find('#button');
   buttonElement.simulate('click');
-
-  expect(wrapper.state().inputvalue).toEqual('');
+  setTimeout(function() {
+    expect(wrapper.state().apiresult).toEqual('error');
+  },2000)
 });
+
+//npm test --watchall --coverage

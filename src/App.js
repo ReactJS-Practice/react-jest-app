@@ -8,7 +8,8 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-      inputvalue : ''
+      inputvalue : '',
+      apiresult : ''
     };
     this.handleChange = this.handleChange.bind(this);
     this.getApiMessage = this.getApiMessage.bind(this);
@@ -17,8 +18,16 @@ class App extends Component {
     getApiMessage(this.state.inputvalue)
     .then(res => {
       console.log('The current time is: ' + res);
+      this.setState({
+        apiresult : res
+      });
     })
-    .catch(err => console.log('There was an error:' + err));
+    .catch(err => {
+      console.log('There was an error:' + err);
+      this.setState({
+        apiresult : err
+      });
+    });
   }
   handleChange(event){
     if(event && event.target.value){
@@ -26,9 +35,7 @@ class App extends Component {
         inputvalue : event.target.value
       });
     }else{
-      this.setState({
-        inputvalue : ""
-      });
+      console.log("there is no change.");
     }    
   }
   render() {

@@ -3,11 +3,20 @@ import ReactDOM from 'react-dom';
 import {getApiMessage} from './api';
 import {shallow} from 'enzyme';
 
-it('renders without crashing', () => {
-    const inputvalue = 'asdfasd'
-    jest.spyOn('getApiMessage').and.returnValue(Promise.resolve(promisedData));
-    getApiMessage(inputvalue).then(result=>{
-        expect(getApiMessage).toHaveBeenCalledWith(inputvalue);
+it('call api with undefined', () => {
+    return getApiMessage().catch((data) => {
+        expect(data).toBe('error');
+    });
+});
+
+it('call api with empty string', () => {
+    return getApiMessage('').catch((data) => {
+        expect(data).toBe('error');
+    });
+});
+it('call api with data string', () => {
+    return getApiMessage('somerandom').then((data) => {
+        expect(data).toBe('success');
     });
 });
 // export function getApiMessage(value) {

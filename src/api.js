@@ -16,7 +16,7 @@
 export function getApiMessage(value) {
     return new Promise((resolve, reject) => {
         setTimeout(function() {
-            value === '' ? reject('error') : resolve('success');
+            value === ''||value ===undefined ? reject('error') : resolve('success');
         }, 2000);
     });
   }
